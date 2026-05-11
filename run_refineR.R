@@ -1,89 +1,60 @@
-# Install refineR package from CRAN, if it is not installed.
+getwd() # 현재 작업 디렉토리 위치 확인
+
+# get clone https://github.com/hermes2014/KSCC2026 # GitHub에서 코드와 자료 내려받기 (colab 터미널 창에서 실행)
+
+setwd("/content/KSCC2026") # 작업 디렉토리 변경
+
+getwd() # 작업 디렉토리가 잘 변경되었는지 확인
+
+# refineR 패키지 설치 (설치되지 않은 경우)
 pkg <- "refineR"
 if (!requireNamespace(pkg, quietly = TRUE)) {
   install.packages(pkg)
 }
 
-
-# Load refineR package
+# refineR 패키지 로딩
 library(refineR) 
 
 
-# To open the help page and documentation with all important 
-# information about the functions and their arguments 
+# refineR 도움말 및 문서 페이지 보기 (패키지 설치 확인용)
 ?refineR
 
-
-# Prefiltering, cleaning, and possible partitioning of the extracted 
-# data from the laboratory information system is not included here and
-# has to be done in advance. 
-# To showcase the refineR application, an exemplary dataset is used 
-# containing only a vector of (prefiltered) numeric test results. 
-# Replace this by importing or loading your own dataset. 
+# refineR 예제 로딩
 data(testcase1)
+data(testcase2)
+data(testcase3)
+data(testcase4)
+data(testcase5)
+
+# 검사 결과의 예로 refineR 예제 입력
 data <- testcase1
 
-
-# Run refineR estimation 
+# 참고구간 추정
 fit <- findRI(Data=data)
 
-
-# Run refineR estimation with bootstrapping, by setting the argument 
-# “NBootstrap” to a value > 0. In our experience, using a minimum 
-# number of 200 bootstrap iterations leads to reasonable results.
-# Please note that the computation time is increased considerably when # bootstrapping is activated. 
-fit.bs <- findRI(Data=data, NBootstrap=200)
+# 참고구간 상/하한의 신뢰구간을 추정하기 위해 bootstrapping 수행
+fit.bs <- findRI(Data=data, NBootstrap=0) # 실해에 시간이 너무 오래 걸려서 일단 패스, 실제는 NBootstrap=200 권장
 
 
-# Print summary of estimated model
+# 추정한 참고구간의 정보 출력
 print(fit)
  
-
-
-# Print summary of estimated model with bootstrapping
+# bootstrapping을 포함해서 추정한 참고구간의 정보 출력
 print(fit.bs)
 
- 
-
-# Compute reference interval estimates for specified percentiles 
-# (RIperc, default: c(0.025,0.975)) with confidence intervals for 
-# specified confidence region (CIprop, default: 0.95) and specify 
-# if you want to use the full data estimate as point estimate or the 
-# median or mean from the bootstrap samples by setting pointEst to 
-# "fullDataEst" (Default), "medianBS", or "meanBS". 
-# We recommend to use the median of all bootstrap samples (medianBS) 
-# here. 
+# RIperc로 주어진 범위로 참고구간 만들기 (default: 0.025 ~ 0.975)
+# CIprop: 참고범위 신뢰구간
+# pointEst: "fullDataEst" (Default), "medianBS" (권장), "meanBS"
 getRI(fit.bs, RIperc=c(0.025, 0.975), CIprop=0.95, pointEst="medianBS")  
 
+# 그래프 그리기
+plot(fit) # 기본형
+plot(fit, showPathol = TRUE) # pathologic population도 추가
  
-# Default plot function 
-x11()
-plot(fit)
- 
-# Optional: Plot model in Box-Cox transformed domain. 
-# This step should only be carried out to assess the goodness of fit. # Please note that confidence intervals cannot be shown in this domain # and the reference interval is shown on the transformed scale, which # does not correspond to the original concentration scale.
 
-# plot(fit, Scale = ”transformed”)
 
-# Additional parameters that could be useful for the plot function
-# (in addition to RIperc, CIprop and pointEst): 
-# xlim, xlab, title,(ylab, ylim) 
-# (xlim and xlab are just exemplary values and should be adjusted for 
-# your data)
 
-plot(fit.bs, RIperc=c(0.025, 0.975), CIprop=0.95, pointEst="medianBS",    
-     xlim=c(0,40), xlab="Concentration [xx/yy]", title="Testset")
- 
-# Check visual representation of the result. If distribution appears
-# to be skewed and shifted away from zero ( e.g. like the AST case),  # perform the estimation using the alternative model ‘modBoxCox’.
-# This way, the two-parameter Box-Cox transformation will be utilized # and an optimal shift will be identified (the option ‘modBoxCoxFast’ # is a faster approximation of the shift with less accurate results)
+# (Optional) 원데이터의 치우침이 심할 경우는 아래와 같이 modified BoxCox (2-p BoxCox) 모델링 사용
 fit.mbc <- findRI(Data=data, model="modBoxCox")
-
-# Print summary of estimated model
 print(fit.mbc)
-
- 
-
-
-# Default plot function 
 plot(fit.mbc)
