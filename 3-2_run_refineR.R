@@ -33,7 +33,7 @@ data <- testcase1
 fit <- findRI(Data=data)
 
 # 참고구간 상/하한의 신뢰구간을 추정하기 위해 bootstrapping 수행
-fit.bs <- findRI(Data=data, NBootstrap=0) # 실해에 시간이 너무 오래 걸려서 일단 패스, 실제는 NBootstrap=200 권장
+fit.bs <- findRI(Data=data, NBootstrap=0) # 실행에 시간이 너무 오래 걸려서 일단 패스, 실제는 NBootstrap=200 권장
 
 
 # 추정한 참고구간의 정보 출력
