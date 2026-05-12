@@ -32,21 +32,21 @@ partition_cols = ['Sex']
 units = 'U/L'
 
 cfg = ep28.AnalysisConfig(
-    value_col=value_col,
-    partition_cols=partition_cols,
+    value_col=value_col, # 검사결과값 컬럼명
+    partition_cols=partition_cols, # 파티션에 사용할 컬럼명 리스트
     manual_exclude_col=None,
-    central_fraction=0.95,
-    limit_ci=0.9,
-    min_n_nonparametric=120,
-    outlier_method="both",
-    exclude_flagged_outliers=False,
-    units=units,
-    decimal_places=1,
+    central_fraction=0.95, # 참고구간의 중앙 범위; 0.95가 기본
+    limit_ci=0.9, # 참고구간의 CI; 0.9를 위해서는 각 120명 이상; 0.95를 위해서는 각 146명 이상; 0.99를 위해서는 각 210명 이상
+    min_n_nonparametric=120, # 최소 검체 수
+    outlier_method="both", # 아웃라이어 검출법; "none", "tukey", "reed", "both"
+    exclude_flagged_outliers=False, # 지정된 아웃라이어 값 제거 여부
+    units=units, # 검사 단위
+    decimal_places=1, # 참고치 소수점 단위
 
-    harris_boyd_enabled=True,
-    harris_boyd_transform="boxcox", # "none", "log", "boxcox"
-    harris_boyd_min_n=3,
-    normality_alpha=0.05,    
+    harris_boyd_enabled=True, # 파티셔닝 필요성 검사여부
+    harris_boyd_transform="boxcox", # 파티셔닝 계산을 위한 변환방법; "none", "log", "boxcox"
+    harris_boyd_min_n=3, # 각 파티션의 최소 갯수
+    normality_alpha=0.05, # 정규성 검토시 사용할 Shapiro-Wilk alpha값; 0.05가 기본
 )
 
 result = ep28.run_analysis(input_path=input_path, sheet_name=sheet_name, cfg=cfg, output_path=output_path)
