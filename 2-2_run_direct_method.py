@@ -5,7 +5,7 @@
 
 %pwd # 현재 작업 디렉토리 경로 출력
 
-!git clone https://github.com/hermes2014/KSCC2026.git
+!git clone https://github.com/hermes2014/KSCC2026.git # 파이썬 주피터노트북 안에서 셸 커맨드를 실행
 
 %ls ./KSCC2026
 
