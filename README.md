@@ -23,8 +23,8 @@
 * CLSI_EP28_Example_Calcium.xlsx
 
 ### LLM이 작성한 참고구간 분석 프로그램 (직접법)
-* ep28_reference_interval_analysis_harris_boyd.py
 * ep28_reference_interval_analysis.py
+* ep28_reference_interval_analysis_harris_boyd.py
 
 ### LLM이 작성한 참고구간 분석 프로그램 (간접법)
 * pyrefine_indirect.py
