@@ -12,7 +12,7 @@ Thought for 11m 44s >
 
 만들었습니다. 아래 파일은 **refineR와 유사한 indirect RI estimator를 Python으로 재구현한 단일 모듈**입니다.
 
-[pyrefine_indirect.py 다운로드](sandbox:/mnt/data/pyrefine_indirect.py)
+[pyrefine_indirect.py 다운로드](pyrefine_indirect.py)
 
 refineR의 현재 CRAN 문서는 `findRI()`가 mixed routine data에서 non-pathological distribution을 모델링해 reference interval을 추정하며, `BoxCox`, `modBoxCoxFast`, `modBoxCox` 모델과 bootstrap 옵션을 제공한다고 설명합니다. 또한 CRAN 기준 refineR 2.0.0은 GPL ≥3 라이선스입니다. ([CRAN][1])
 제가 만든 Python 파일은 R 소스의 구조, 즉 overlapping histogram 생성, Box-Cox 기반 `lambda/mu/sigma/P` 탐색, asymmetric confidence band, negative log-likelihood 계열 cost function, bootstrap CI, plotting 흐름을 반영했습니다. refineR 원 소스에서도 `generateHistData()`가 overlapping histogram을 만들고, `calculateCostHist()`가 lambda/mu/sigma/P/cost를 계산하며, `findRI()`가 bootstrap 반복과 최적 파라미터 저장을 수행합니다. ([RDrr][2])
