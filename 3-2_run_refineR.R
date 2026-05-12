@@ -1,6 +1,6 @@
 getwd() # 현재 작업 디렉토리 위치 확인
 
-# get clone https://github.com/hermes2014/KSCC2026 # GitHub에서 코드와 자료 내려받기 (colab 터미널 창에서 실행)
+# git clone https://github.com/hermes2014/KSCC2026 # GitHub에서 코드와 자료 내려받기 (colab 터미널 창에서 실행)
 
 setwd("/content/KSCC2026") # 작업 디렉토리 변경
 
