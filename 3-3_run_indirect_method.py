@@ -15,10 +15,10 @@ x = df["result"].to_numpy()
 
 fit = find_ri(
     x,
-    model="BoxCox",        # "BoxCox", "modBoxCoxFast", "modBoxCox"
-    n_bootstrap=0,         # 너무 오래 걸려서 일단 pass, 검토 단계에서는 0~30, 최종 분석에서는 충분히 크게
-    seed=123,
-    n_jobs=1
+    model="BoxCox",        # "BoxCox", "modBoxCoxFast", "modBoxCox"; 기본은 "BoxCox"
+    n_bootstrap=0,         # 부트스트랩 반복 횟수; 너무 오래 걸려서 일단 pass, 검토 단계에서는 0~30, 최종 분석에서는 충분히 크게
+    seed=123,              # 임의추출시 사용할 seed
+    n_jobs=1               # 부트스트랩에 사용할 thread 수 (multi-cpu 지원)
 )
 
 print(fit.summary())
